@@ -1,5 +1,11 @@
-#### The Meteor Chef: Exporting Data From your Application
+#### The Meteor Chef: \#001 - Exporting Data From your Application
 
-In this recipe, we'll learn how to help our users get data out of our application and packaged up as a .zip file. We'll learn how to export XML, HTML, and CSV files to cover a wide range of use cases.
+In this recipe, we'll be helping our pretend user, Bill Murray, export his data from a social network called Blerg. We'll learn how to help him get data out of our application and packaged up as a .zip file containing XML, HTML, and CSV files.
 
-Try this recipe: [http://themeteorchef.com/recipes/exporting-data-from-your-meteor-application](http://themeteorchef.com/recipes/exporting-data-from-your-meteor-application)
+Read the Recipe: [http://themeteorchef.com/recipes/exporting-data-from-your-meteor-application](http://themeteorchef.com/recipes/exporting-data-from-your-meteor-application)
+
+Demo the Recipe:
+[http://tmc-recipe-001-demo.meteor.com](http://tmc-recipe-001-demo.meteor.com)
+
+Download the Source:
+[https://github.com/themeteorchef/exporting-data-from-your-meteor-application/archive/master.zip](https://github.com/themeteorchef/exporting-data-from-your-meteor-application/archive/master.zip)
