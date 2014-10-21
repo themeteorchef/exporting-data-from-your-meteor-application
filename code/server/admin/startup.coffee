@@ -8,8 +8,15 @@
 
 # Create an array of user accounts.
 users = [
-  { name: "Admin", email: "admin@admin.com", password: "password" }
-  { name: "Peter Venkman", email: "venkman@ghostbusters.com", password: "slimer" }
+  {
+    name: "Peter Venkman"
+    email: "venkman@ghostbusters.com"
+    password: "slimer"
+    photo: "https://s3.amazonaws.com/themeteorchef-storage/recipes/001_exporting-data-from-your-meteor-application/peter-venkman.jpg"
+    location: "New York, NY"
+    career: "Scientist, Ghostbuster"
+    biography: "I was born in Brooklyn, New York. I'm one of three doctors of parapsychology on the Ghostbusters team. I hold PhDs in both parapsychology and psychology."
+  }
 ]
 
 # Loop through array of user accounts.
@@ -26,4 +33,8 @@ for user in users
       password: user.password
       profile:
         name: user.name
+        photo: user.photo
+        location: user.location
+        career: user.career
+        biography: user.biography
     )

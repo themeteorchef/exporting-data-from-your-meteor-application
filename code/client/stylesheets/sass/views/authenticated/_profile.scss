@@ -1,0 +1,37 @@
+.user-information {
+  margin-top: 20px;
+}
+.user-information .panel-body {
+  padding: 0;
+}
+
+.panel-block {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.panel-block strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.panel-block p {
+  margin-bottom: 0px;
+}
+
+.panel-block ul {
+  @extend %clearfix;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0px;
+}
+
+.panel-block li {
+  float: left;
+  max-width: 50px;
+  margin-right: 10px;
+
+  &:last-child {
+    margin-right: 0px;
+  }
+}

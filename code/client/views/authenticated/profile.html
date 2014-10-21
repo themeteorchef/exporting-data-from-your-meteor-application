@@ -1,3 +1,32 @@
 <template name="profile">
-  <h3>Profile</h3>
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <img src="{{currentUser.profile.photo}}" class="profile-photo img-responsive img-rounded" alt="{{currentUser.profile.name}}" />
+      <div class="panel panel-default user-information">
+        <div class="panel-heading">About {{currentUser.profile.name}}</div>
+        <div class="panel-body">
+          <div class="panel-block">
+            <strong>Friends (10)</strong>
+            <ul>
+            {{#each friends}}
+              <li><img src="{{photo}}" class="img-responsive" alt="{{name}}"></li>
+            {{/each}}
+            </ul>
+          </div>
+          <div class="panel-block">
+            <strong>Location</strong>
+            <p>{{currentUser.profile.location}}</p>
+          </div>
+          <div class="panel-block">
+            <strong>Career</strong>
+            <p>{{currentUser.profile.career}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-8">
+      <h2>{{currentUser.profile.name}}</h2>
+      <p>{{currentUser.profile.biography}}</p>
+    </div>
+  </div> <!-- end .row -->
 </template>
