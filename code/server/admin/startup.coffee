@@ -9,6 +9,7 @@
 # Create an array of user accounts.
 users = [
   { name: "Admin", email: "admin@admin.com", password: "password" }
+  { name: "Peter Venkman", email: "venkman@ghostbusters.com", password: "slimer" }
 ]
 
 # Loop through array of user accounts.
@@ -26,4 +27,3 @@ for user in users
       profile:
         name: user.name
     )
-
