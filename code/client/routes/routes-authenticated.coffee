@@ -12,6 +12,8 @@ Router.map(->
     path: '/profile'
     # Note: we're not defining a template here because Iron Router is going to
     # assume this is the same as the route name (i.e. profile).
+    waitOn: ->
+      Meteor.subscribe 'data'
     onBeforeAction: ->
       Session.set 'currentRoute', 'profile'
   )

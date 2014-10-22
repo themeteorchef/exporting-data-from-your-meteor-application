@@ -3,10 +3,7 @@
   Collection of methods and functions to run on server startup.
 ###
 
-# Generate Test Accounts
-# Creates a collection of test accounts automatically on startup.
-
-# Create an array of user accounts.
+# Define an array of users to create.
 users = [
   {
     name: "Peter Venkman"
@@ -28,6 +25,7 @@ for user in users
   # If an existing user is not found, create the account.
   if not checkUser
 
+    # Create the user.
     id = Accounts.createUser(
       email: user.email
       password: user.password
@@ -38,3 +36,6 @@ for user in users
         career: user.career
         biography: user.biography
     )
+
+    # Call method to insert fixture data.
+    Meteor.call 'loadFixtures'
