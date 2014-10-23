@@ -16,4 +16,7 @@ pinglamb:bootstrap3
 particle4dev:sass
 cmather:handlebars-server
 themeteorchef:jquery-validation
+meteorhacks:npm
 
+
+npm-container
