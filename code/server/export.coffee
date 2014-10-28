@@ -26,7 +26,9 @@ Meteor.methods(
 
     # Get the data we'll need to work with from the DB.
     # Note: we're using the .fetch() method so that our data is returned as
-    # an array instead of a plain cursor.
+    # an array instead of a plain cursor. getUser uses a findOne method and we
+    # can expect a single object back so no need to fetch().
+
     getUser     = Meteor.users.findOne({"_id": userId}, {fields: {"profile.name": 1, "profile.photo": 1, "profile.biography": 1, "profile.location": 1, "profile.career": 1}})
     getFriends  = Friends.find({"owner": userId}, {fields: {"_id": 1, "photo": 1, "name": 1}}).fetch()
     getComments = Comments.find({"owner": userId}, {fields: {"_id": 1, "commenterName": 1, "commentDate": 1, "commentContent": 1}}).fetch()
