@@ -13,7 +13,6 @@ check
 audit-argument-checks
 iron:router
 pinglamb:bootstrap3
-particle4dev:sass
 cmather:handlebars-server
 themeteorchef:jquery-validation
 meteorhacks:npm
@@ -21,4 +20,5 @@ meteorhacks:npm
 
 npm-container
 pfafman:filesaver
+particle4dev:sass@0.3.0
 
