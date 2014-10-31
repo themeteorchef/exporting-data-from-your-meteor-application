@@ -1,6 +1,6 @@
 Template.export.events(
 
-  'click .export-data': (e)->
+  'click .export-data': ->
     # Get the current user's ID.
     userId = Meteor.userId()
     # Call our exportData method on the server, passing the userId so we can

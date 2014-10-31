@@ -55,10 +55,13 @@ Meteor.methods(
       csv.writeToString(getFriends,
         # Tell fast CSV that we want our first row to be column headers.
         {headers: true},
-        (err,data) ->
-          # Get the string (data) returned from Fast CSV and add it as a file
-          # to our friends folder in our .zip file.
-          zip.file('friends.csv', data)
+        (error,data) ->
+          if error
+            console.log error
+          else
+            # Get the string (data) returned from Fast CSV and add it as a file
+            # to our friends folder in our .zip file.
+            zip.file('friends.csv', data)
       )
 
     exportProfileAsXml = ->
