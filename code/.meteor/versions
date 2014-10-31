@@ -49,6 +49,7 @@ npm-container@1.0.0
 observe-sequence@1.0.3
 ordered-dict@1.0.1
 particle4dev:sass@0.3.0
+pfafman:filesaver@0.1.0
 pinglamb:bootstrap3@3.2.1
 random@1.0.1
 reactive-dict@1.0.4

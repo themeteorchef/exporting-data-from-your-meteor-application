@@ -28,7 +28,7 @@ Template.export.events(
             type: "zip"
           )
         blob = base64ToBlob(response)
-        Meteor.saveAs(blob, 'export.zip')
+        saveAs(blob, 'export.zip')
     )
 
 )
