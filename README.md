@@ -10,4 +10,4 @@ In this recipe, we'll be helping our pretend user Peter Venkman export his data 
 
 [Download the Source](https://github.com/themeteorchef/exporting-data-from-your-meteor-application/archive/master.zip)
 
-This code for this recipe is licensed under the [MIT License](http://opensource.org/licenses/MIT).
+The code for this recipe is licensed under the [MIT License](http://opensource.org/licenses/MIT).
