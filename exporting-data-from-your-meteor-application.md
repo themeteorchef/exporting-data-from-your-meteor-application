@@ -400,7 +400,3 @@ Do you feel like a champion? You should. You deserve that gold medal, sport.
 ### Wrap Up & Summary
 
 Wow. What a feat. In this recipe we learned how to export data on the client as a .zip file using a server side method. We learned how to export our data as CSV, XML, and HTML files as well as how to bundle them into a .zip file. Finally, we learned how to get the .zip file off our server and onto our user, Peter's computer. High fives all around.
-
-<div class="note">
-<p>If you have any questions or comments on this recipe, I'd love to hear them below! Thanks for reading. See you soon for the next recipe.</p>
-</div>
