@@ -70,7 +70,7 @@ Meteor.methods(
 
 **Note:** We're making use of the [Meteor Check package](https://docs.meteor.com/#/full/check) so that we can verify the data being sent from the client actually matches the expected pattern on the server. This is a good practice to pick up as it ensures only the data you want is getting into the database. Here, we're only passing over a single string, so we test the variable against the `String` pattern.
 
-### Setting up our .zip file
+### Setting Up Our .zip File
 
 Now that we've got the skeleton of our method outlined, we need to get our .zip file initialized so we can start adding data to it. First, we need to create an instance of JSZip using the variable we set the require to up above (`jsZip`).
 
