@@ -317,6 +317,11 @@ zip.file('index.html', htmlExportString)
 
 Similar to how we wrapped our XML export, here we're puling together all of our strings into a single variable `htmlExportString` and passing that to the `zip.file()` method to create a file in our .zip file's root called `index.html`. That's it for HTML and getting data out, so let's move onto the last step of exporting data from our application: sending our .zip data back to the client!
 
+<div class="note">
+<h3>A quick note</h3>
+<p>A little addition was made to this recipe after it was published showing off how to also export profile data as a .json file. You can find the example <a href="https://github.com/themeteorchef/exporting-data-from-your-meteor-application/blob/master/code/server/export.coffee#L252">in the source on GitHub</a>. A special thanks to <a href="https://twitter.com/lzl">@lzl on Twitter</a> for the suggestion!</p>
+</div>
+
 ### Getting Our .zip File to the Client
 
 _Cracks knuckles_. Alright! We're in the home stretch.

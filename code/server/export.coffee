@@ -249,10 +249,47 @@ Meteor.methods(
       # Export our HTML as a single file in the zip root.
       zip.file('index.html', htmlExportString)
 
+    exportProfileAsJSON = ->
+      # Define our profile object that we'll "load" our profile's data into.
+      # Note: here, we pre-define each of the parent keys (e.g friends) as
+      # empty objects and arrays so that we can easily set or push data into
+      # them later.
+      profile =
+        user: {}
+        friends: []
+        comments: []
+        posts: []
+
+      # Set our user's profile info to the profile.user object.
+      profile.user =
+        name: getUser.profile.name
+        photo: getUser.profile.photo
+        biography: getUser.profile.biography
+        location: getUser.profile.location
+        career: getUser.profile.career
+
+      # Here we loop through friends, comments, and posts, pushing the objects
+      # from each result set into the respective array defined above.
+      for friend in getFriends
+        profile.friends.push friend
+
+      for comment in getComments
+        profile.comments.push comment
+
+      for post in getPosts
+        profile.posts.push post
+
+      # Convert our profile to a string for our .zip.
+      profile = JSON.stringify(profile)
+
+      # Add our JSON string to our .zip.
+      zip.file('tester.json', profile)
+
     # Run our export functions.
     exportFriendsAsCsv()
     exportProfileAsXml()
     exportProfileAsHtml()
+    exportProfileAsJSON()
 
     # Complete our .zip file and return it to our client-side method call
     # as a base64 encoded string.
