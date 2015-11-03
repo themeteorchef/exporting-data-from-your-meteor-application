@@ -1,5 +1,4 @@
 {
-  "jszip": "2.4.0",
-  "xmlbuilder": "2.4.4",
-  "fast-csv": "0.5.3"
+  "json2xml": "0.1.2",
+  "jszip": "2.5.0"
 }
