@@ -1,0 +1,31 @@
+<template name="feed">
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#posts" role="tab" data-toggle="tab">By {{currentUser.profile.name.first}}</a></li>
+    <li><a href="#comments" role="tab" data-toggle="tab">By Friends</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active posts" id="posts">
+      {{#each posts}}
+        <div class="panel panel-default">
+          <div class="panel-body">
+            {{text}}
+          </div>
+          <div class="panel-footer">By <strong>{{name}}</strong> on {{date}}</div>
+        </div>
+      {{/each}}
+    </div>
+    <div class="tab-pane comments" id="comments">
+      {{#each comments}}
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <img class="comment-avatar" src="{{avatar}}" alt="{{commenterName}}">
+            <div class="comment-content">
+              {{commentContent}}
+            </div>
+          </div>
+          <div class="panel-footer">By <strong>{{commenterName}}</strong> on {{commentDate}}</div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</template>
