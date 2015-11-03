@@ -1,15 +1,20 @@
 let convert = ( base64String ) => {
   let decodedString       = _decodeBase64( base64String ),
-      decodedStringLength = _getLength( decodedStringLength ),
-      arrayBuffer         = _createArrayBuffer( decodedStringLength ),
+      decodedStringLength = _getLength( decodedString ),
       byteArray           = _buildByteArray( decodedString, decodedStringLength );
 
-  return _createBlob( byteArray );
+  if ( byteArray ) {
+    return _createBlob( byteArray );
+  }
 };
 
-let _decodeBase64 = ( string ) => atob( string );
+let _decodeBase64 = ( string ) => {
+  return atob( string );
+};
 
-let _getLength = ( value ) => value.length;
+let _getLength = ( value ) => {
+  return value.length;
+};
 
 let _buildByteArray = ( string, stringLength ) => {
   let buffer = new ArrayBuffer( stringLength ),

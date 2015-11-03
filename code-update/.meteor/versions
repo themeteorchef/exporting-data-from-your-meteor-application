@@ -37,6 +37,7 @@ email@1.0.8
 fortawesome:fontawesome@4.4.0
 fourseven:scss@3.4.1
 geojson-utils@1.0.4
+harrison:papa-parse@1.1.0
 hot-code-push@1.0.0
 html-tools@1.0.5
 htmljs@1.0.5
@@ -65,6 +66,7 @@ npm-container@1.2.0
 npm-mongo@1.4.39_1
 observe-sequence@1.0.7
 ordered-dict@1.0.4
+pfafman:filesaver@0.2.1
 promise@0.5.1
 random@1.0.5
 rate-limit@1.0.0

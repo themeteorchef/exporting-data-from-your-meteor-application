@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "json2xml": {
+      "version": "0.1.2"
+    },
+    "jszip": {
+      "version": "2.5.0",
+      "dependencies": {
+        "pako": {
+          "version": "0.2.8"
+        }
+      }
+    }
+  }
+}
