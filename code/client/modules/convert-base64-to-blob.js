@@ -28,7 +28,7 @@ let _buildByteArray = ( string, stringLength ) => {
 };
 
 let _createBlob = ( byteArray ) => {
-  return new Blob( [ byteArray ], { type: 'zip' } );
+  return new Blob( [ byteArray ], { type: 'application/zip' } );
 };
 
 Modules.client.convertBase64ToBlob = convert;

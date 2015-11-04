@@ -13,7 +13,7 @@ let _addAssets = ( folder ) => {
 };
 
 let _compileZip = ( archive, profileHtml ) => {
-  let assetsFolder  = archive.folder( 'assets' );
+  let assetsFolder = archive.folder( 'assets' );
   _addAssets( assetsFolder );
   _prepareDataForArchive( archive, Friends, 'csv', 'friends.csv' );
   _prepareDataForArchive( archive, Posts, 'xml', 'posts.xml' );
@@ -49,11 +49,11 @@ let _initializeZipArchive = () => {
   return new jsZip();
 };
 
-let _addFileToZipArchive  = ( archive, name, contents ) => {
+let _addFileToZipArchive = ( archive, name, contents ) => {
   archive.file( name, contents );
 };
 
-let _generateZipArchive   = ( archive ) => {
+let _generateZipArchive = ( archive ) => {
   return archive.generate( { type: 'base64' } );
 };
 

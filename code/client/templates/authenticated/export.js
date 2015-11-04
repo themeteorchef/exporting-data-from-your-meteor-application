@@ -6,8 +6,8 @@ Template.export.events({
   'click .export-data' ( event, template ) {
     $( event.target ).button( 'loading' );
 
-    let user        = Meteor.user(),
-        fileName    = `${user.profile.name.first} ${user.profile.name.last}`,
+    let name        = Meteor.user().profile.name,
+        fileName    = `${name.first} ${name.last}`,
         profileHtml = Modules.client.getProfileHTML();
 
     Meteor.call( 'exportData', profileHtml, ( error, response ) => {
