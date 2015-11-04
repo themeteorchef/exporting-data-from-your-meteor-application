@@ -1,6 +1,6 @@
 <div class="note info">
   <h3>Pre-Written Code <i class="fa fa-info"></i></h3>
-  <p><strong>Heads up</strong>: this recipe relies on some code that has been pre-written for you (like routes and templates), <a href="#">available in the recipe's repository on GitHub</a>. During this recipe, our focus will only be on implementing an export feature. If you find yourself asking "we didn't cover that, did we?", make sure to check the source on GitHub.</p>
+  <p><strong>Heads up</strong>: this recipe relies on some code that has been pre-written for you (like routes and templates), <a href="https://github.com/themeteorchef/exporting-data-from-your-meteor-application">available in the recipe's repository on GitHub</a>. During this recipe, our focus will only be on implementing an export feature. If you find yourself asking "we didn't cover that, did we?", make sure to check the source on GitHub.</p>
 </div>
 
 <div class="note">
@@ -12,7 +12,7 @@
 
 Before we write any code to get data _out_ of our application, let's get a few prerequisites installed and out of the way.
 
-First, this recipe relies on a few NPM packages that are _not_ available via [Atmosphere](http://atmospherejs.com). While [we can set up a local Meteor package and import these](https://themeteorchef.com/snippets/using-npm-packages/#tmc-adding-an-npm-package-with-a-meteor-package) ourselves, it's much easier to use the `meteorhacks:npm` package to quickly and easily add them.
+First, this recipe relies on a few NPM packages that are _not_ available via [Atmosphere](http://atmospherejs.com). While [we could set up a local Meteor package and import these](https://themeteorchef.com/snippets/using-npm-packages/#tmc-adding-an-npm-package-with-a-meteor-package) ourselves, it's much easier to use the `meteorhacks:npm` package to quickly and easily add them.
 
 To install the `meteorhacks:npm` package, hop over to your terminal and from within your project's directory run:
 
@@ -37,6 +37,8 @@ Next, we need to add two NPM packages using the `meteorhacks:npm` package we jus
 
 Here, we're adding two dependencies: [JSZip](https://www.npmjs.org/package/jszip)—what we'll use to create our zip file—and [json2xml](https://www.npmjs.org/package/json2xml), what we'll use to generate an XML file on the server. Once you've updated your `packages.json` file, save it and each package will be installed.
 
+Before we dig in, we need two more packages from Atmosphere: `harrison:papaparse` and `pfafman:filesaver`. In our terminal and from within our project's directory:
+
 <p class="block-header">Terminal</p>
 
 ```bash
@@ -45,13 +47,13 @@ meteor add harrison:papaparse
 
 To make generating CSV files easier, we're going to add the [Papa Parse](http://papaparse.com/) library via the `harrison:papaparse` package. This will give us a one-liner for generating CSV's later (yes, that's awesome).
 
-Before we dig in, we need one more package from Atmosphere: `pfafman:filesaver`. This Meteor package will give us access to [FileSaver.js](https://github.com/eligrey/FileSaver.js) on the client so we can actually _download_ our .zip file. To install it, hop into your terminal and run:
-
 <p class="block-header">Terminal</p>
 
 ```.lang-bash
 meteor add pfafman:filesaver
 ```
+
+This Meteor package will give us access to [FileSaver.js](https://github.com/eligrey/FileSaver.js) on the client so we can actually _download_ our .zip file.
 
 Wonderful! If all went as planned, we should have our dependencies locked and loaded and we can move into getting our data exported.
 
@@ -110,10 +112,9 @@ Meteor.publish( 'profile', function() {
     Comments.find( { owner: userId } )
   ];
 });
-
 ```
 
-Pretty simple! Here, we're returning an array of cursors from our publication. Notice that for each cursor, we're passing a query specifying the field `owner`. Behind the scenes, we've [set up a few fixtures]() that load up our app with data when it starts. When those fixtures are added, we automatically assign them to a test user that we've also [defined behind the scenes](). When the fixtures are inserted, we apply the test user's ID in the `owner` field.
+Pretty simple! Here, we're returning an array of cursors from our publication. Notice that for each cursor, we're passing a query specifying the field `owner`. Behind the scenes, we've [set up a few fixtures](https://github.com/themeteorchef/exporting-data-from-your-meteor-application/blob/master/code/server/modules/fixtures.js) that load up our app with data when it starts. When those fixtures are added, we automatically assign them to a test user that we've also [defined behind the scenes](https://github.com/themeteorchef/exporting-data-from-your-meteor-application/blob/master/code/server/modules/generate-accounts.js). When the fixtures are inserted, we apply the test user's ID in the `owner` field.
 
 In our publication, then, we only want to return the documents in each collection where the `owner` field matches the currently logged in user's ID. Why? This ensures that if we login as another user later, we don't accidentally return their data as well. But wait...how do we know that the currently logged in user will be our test user? We don't!
 
@@ -152,10 +153,10 @@ Template.export.events({
 
 Next up, we need to handle two things: button state (for a little UX flair) and generating our profile as HTML. The first part is really easy. Notice that here, when our button is clicked we're firing the `.button( 'loading ' )` method we get from Bootstrap on `event.target`. Here, `event.target` corresponds to where the click event originated from, or, our `.export-data` button. Neat! When this fires, our button will display the loading text we set on the button's `data-loading-text` attribute earlier.
 
-Great. Next up, we grab our current user and build our a string assigned to `fileName`, made up of the user's first and last name. Our goal with this is to label the zip file that will download for the user `First Last.zip` or `Peter Venkman.zip`. Just beneath this, we get to the good stuff. Here, we've assigned `profileHtml` to the result of calling `Modules.client.getProfileHTML()`. This is a [module](https://themeteorchef.com/snippets/using-the-module-pattern-with-meteor/) we've written that will help us to build out the HTML of our user's profile with the data embedded in it (remember, this is why we have the subscription to `profile` in our `export` template). Let's hop over there now and see how it's taking shape.
+Great. Next up, we grab our current user and build out a string assigned to `fileName`, made up of the user's first and last name. Our goal with this is to label the zip file that will download for the user `First Last.zip` or `Peter Venkman.zip`. Just beneath this, we get to the good stuff. Here, we've assigned `profileHtml` to the result of calling `Modules.client.getProfileHTML()`. This is a [module](https://themeteorchef.com/snippets/using-the-module-pattern-with-meteor/) we've written that will help us to build out the HTML of our user's profile with the data embedded in it (remember, this is why we have the subscription to `profile` in our `export` template). Let's hop over there now and see how it's taking shape.
 
 #### Defining an HTML export module
-Remember that earlier, we explained the purpose of this step being to easily render out the HTML of user's profile with their data embedded. To get the job done, we're going to rely on Meteor's `Blaze.toHTMLWithData()` method which allows us to pass a template to render along with the data context _for_ that template. We're doing this on the client because as of writing, the method will only work client-side.
+Remember that earlier, we explained the purpose of this step being to easily render out the HTML of our user's profile with their data embedded. To get the job done, we're going to rely on Meteor's `Blaze.toHTMLWithData()` method which allows us to pass a template to render along with the data context _for_ that template. We're doing this on the client because as of writing, the method will only work client-side.
 
 First, let's dump out the contents of our module and then explain what each step is doing.
 
@@ -185,7 +186,7 @@ let _getDataFromCollection = ( collection, query, filters ) => {
 Modules.client.getProfileHTML = getHTML;
 ```
 
-Ahh! Don't panic. This is pretty simple. Using [the module pattern](), we're defining a set of methods to help us accomplish three things:
+Ahh! Don't panic. This is pretty simple. Using [the module pattern](https://themeteorchef.com/snippets/using-the-module-pattern-with-meteor/), we're defining a set of methods to help us accomplish three things:
 
 1. Getting data from each of the collections used in the `profile` template.
 2. Returning an object with the cursors from those collections (our data context).
@@ -210,6 +211,11 @@ Template.profile.helpers({
 ```
 
 Okay, so why use the object? This is because we'll be passing this object to our call to `Blaze.toHTMLWithData()` which will use the data directly (it won't look at the template's helpers). When the method is invoked, it will take the template name we pass along with the data and build an HTML string replacing any helpers with the matching data in the object we pass. So it's _super_ clear, `friends` in the object we're returning in `_getTemplateData()` will map to an `{{#each friends}}` loop. Make sense?
+
+<div class="note success">
+  <h3>Profile Template <i class="fa fa-thumbs-up"></i></h3>
+  <p>Before you keep reading, make sure to take a peek at <a href="https://github.com/themeteorchef/exporting-data-from-your-meteor-application/blob/master/code/client/templates/authenticated/profile.html">the profile template</a> we're rendering here. Pay attention to the helpers and template includes to see how the data context we'll pass next is mapping over.</p>
+</div>
 
 Inside of `_getTemplateData()`, we're simply calling to another method `_getDataFromCollection` which is responsible for returning the data from the collection we specify. Notice, to make this work, we're just passing along the global variable each collection is assigned to. Using this method, we can define a single function to return our data for us without having to write three separate functions. Efficient! In addition to the collection name, notice that we're also passing two empty objects. This is optional. 
 
@@ -289,7 +295,7 @@ Modules.server.exportData = exportData;
 
 A few things happening here. First, down at the bottom, notice that we're assigning the `exportData` function we've defined to `Modules.server.exportData`. What this is doing is helping us to namespace the `exportData` function and expose it to the server. By doing this, we can get access to `exportData` while keeping the rest of our methods in this file private. Why do that? The big reason is to avoid naming conflicts, but also because it's a bit tidier.
 
-Up at the top, notice that we're loading in the NPM packages that we setup at the beginning of the recipe. Again, we're using these to help us export some of our data in the `XML` format and create a `.zip` archive that we can send back to the client. That may sound scary, but as we'll see, they're usage is pretty straightforward.
+Up at the top, notice that we're loading in the NPM packages that we setup at the beginning of the recipe. Again, we're using these to help us export some of our data in the `XML` format and create a `.zip` archive that we can send back to the client. That may sound scary, but as we'll see, their usage is pretty straightforward.
 
 Inside of `exportData`, we start to get our hands dirty. First, we're calling to another method called `_initializeZipArchive()`. Here's how it looks:
 
@@ -305,7 +311,7 @@ let _initializeZipArchive = () => {
 [...]
 ```
 
-Simple! Again, because we're following [the module pattern]() here, our goal is to work to get each of the functions that make up this module as small as possible. More specifically, we're trying to reduce each function down to _one task_. Why? Clarity. This makes it easy not just for us, but for other developers too, to follow the chain of thought. Here, we're simply making a call to `new jsZip()` which is creating an instance of the `jsZip` library we imported in the last step. We return this from function so we can pass it along to the rest of our methods from within our main `exportData` function.
+Simple! Again, because we're following [the module pattern](https://themeteorchef.com/snippets/using-the-module-pattern-with-meteor/) here, our goal is to work to get each of the functions that make up this module as small as possible. More specifically, we're trying to reduce each function down to _one task_. Why? Clarity. This makes it easy not just for us, but for other developers too, to follow the chain of thought. Here, we're simply making a call to `new jsZip()` which is creating an instance of the `jsZip` library we imported in the last step. We return this from the function so we can pass it along to the rest of our methods from within our main `exportData` function.
 
 Next, we make a call to `_compileZip()`, passing our new zip archive's instance as `archive` and also pass along our profile HTML we sent over from the client. This next step involves the bulk of the export method, so pay close attention! Let's define `_compileZip()` now and see what it's doing.
 
@@ -337,7 +343,7 @@ let _addAssets = ( folder ) => {
 [...]
 ```
 
-Woof! [Inception time](). Again, this seems scary but when we zoom out later it will make _a lot_ more sense. Here, we're making a call to `_addFileToZipArchive()` twice (we'll define this next) passing three arguments. The location we want to save each file (this will be in our `assets` folder we created in the last step), a name to save each file as, and the contents of each file. Notice here, we're making a call to `Assets.getText()` which is looking in our project's `/private` directory for two files: `export/style.css` and `export/bootstrap.js`. This method is quite literally taking the files at these locations and grabbing their contents as text.
+Woof! [Inception time](http://inception.davepedu.com/). Again, this seems scary but when we zoom out later it will make _a lot_ more sense. Here, we're making a call to `_addFileToZipArchive()` twice (we'll define this next) passing three arguments. The location we want to save each file (this will be in our `assets` folder we created in the last step), a name to save each file as, and the contents of each file. Notice here, we're making a call to `Assets.getText()` which is looking in our project's `/private` directory for two files: `export/style.css` and `export/bootstrap.js`. This method is quite literally taking the files at these locations and grabbing their contents as text.
 
 <p class="block-header">/server/modules/export-data.js</p>
 
@@ -373,7 +379,7 @@ let _compileZip = ( archive, profileHtml ) => {
 };
 ```
 
-Here, we see the function to end all functions being called `_prepareDataForArchive()`. Thought it may seem a bit spooky, what this is doing is helping us to save _a ton_ of extra code. Similar to the `_addFileToZipArchive()` method we just defined, this function will be responsible for grabbing the data we need for each type of export and ensure that it gets formatted correctly. Here, we can see four arguments being passed:
+Here, we see the function to end all functions being called `_prepareDataForArchive()`. Thought it may seem a bit spooky, what this is doing is helping us to save _a ton_ of extra code. Similar—in its resuable nature—to the `_addFileToZipArchive()` method we just defined, this function will be responsible for grabbing the data we need for each type of export and ensure that it gets formatted correctly. Here, we can see four arguments being passed:
 
 1. The instance of our zip archive.
 2. The collection/source we want to pull data from.
@@ -446,11 +452,11 @@ let _formatData = {
 [...]
 ```
 
-Let's step through each method. First, for our `csv()` method, we simply return a call to `Papa.unparse()`, passing over the data we retrieved. This method comes from the Papa Parse package `` that we installed at the beginning of the recipe. With this one-liner, we get the passed data back as a CSV formatted string. _Baller_.
+Let's step through each method. First, for our `csv()` method, we simply return a call to `Papa.unparse()`, passing over the data we retrieved. This method comes from the Papa Parse package `harrison:papaparse` that we installed at the beginning of the recipe. With this one-liner, we get the passed data back as a CSV formatted string. _Baller_.
 
 Next up, `xml()`. Again, thanks to the json2xml library we added earlier, this is a one liner as well. Here, we pass two arguments: an object with a parameter `posts` which is equal to the [xml root](https://en.wikipedia.org/wiki/Root_element) element we want to wrap our list of posts with `<posts></posts>`, taking the array of data we want converted to XML. In the second position, we add a single option `header: true` to ensure that our XML file is output with an XML encoding tag `<?xml version="1.0" encoding="UTF-8"?>` (good for importing the data elsewhere later).
 
-Third, we handle our `json()` data. Another one liner! How lucky are we? Here, we just make a call to the native `JSON.stringify()` method, passing our data and two additional arguments `null` and `2`. `null` here just lets the method know that we don't want to [replace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#The_replacer_parameter) anything in the JSON and the `2` means that we want our string formatted with two tab-spaces. We do the latter because we want our JSON readable for our user later (instead of a single, ball of yarn string). 
+Third, we handle our `json()` data. Another one liner! How lucky are we? Here, we just make a call to the native `JSON.stringify()` method, passing our data and two additional arguments `null` and `2`. `null` here just lets the method know that we don't want to [replace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#The_replacer_parameter) anything in the JSON and the `2` means that we want our string formatted with two tab-spaces. We do the latter because we want our JSON readable for our user later (instead of a single, ball of yarn). 
 
 Last but not least, HTML. This is pretty easy, too. Here, we make two quick calls to get the contents of `export/header.html` and `export/footer.html`. These will contain the HTML that will bookend the profile template HTML we generated earlier (notice how we're concatenating the three in the `return` statement). So it's clear, here is the result of this:
 
@@ -478,7 +484,7 @@ Last but not least, HTML. This is pretty easy, too. Here, we make two quick call
 </html>  
 ```
 
-Something important to point out. Notice that we're including a link to `assets/style.css` and `assets/bootstrap.js` in this output. Remember, these will pont to the files we added to the `assets` directory of our zip file earlier! Pretty neat. With this in place, we're almost done with out export. Let's hop back up to our `_prepareDataForArchive()` method real quick.
+Something important to point out. Notice that we're including a link to `assets/style.css` and `assets/bootstrap.js` in this output. Remember, these will pont to the files we added to the `assets` directory of our zip file earlier! Pretty neat. With this in place, we're almost done with our export. Let's hop back up to our `_prepareDataForArchive()` method real quick.
 
 <p class="block-header">/server/modules/export-data.js</p>
 
@@ -595,7 +601,7 @@ Come back! This is a lot of weird stuff, for sure, but don't let it scare you. H
 1. Decode the `base64` string.
 2. Create an [array buffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) based on the length of the decoded string.
 3. Build a [Uint8Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array) using that buffer.
-4. Assign each of decoded `base64` characters to a spot _in_ that array.
+4. Assign each of the decoded `base64` characters to a spot _in_ that array.
 5. Take that array and pass it to the `new Blob` method to get our file blob.
 
 YIKES. This is a bit gnarly, but don't let it scare you. Just know that these are the steps necessary to go from `base64` to the `ArrayBufferView` format accepted by the `Blob()` [constructor function](https://developer.mozilla.org/en-US/docs/Web/API/Blob/Blob). The part to pay attention to is the last method in the file which we're returning directly `_createBlob`. Here, we're creating a file blob that will be accepted by filesaver.js. Notice that for `type` we're passing `application/zip`. This identifies the file as the correct [MIME-type](http://www.freeformatter.com/mime-types-list.html).
@@ -628,7 +634,7 @@ Template.export.events({
 });
 ```
 
-Just a one-liner to seal the deal: `saveAs( blob, `${fileName}.zip` );`. Boom! Remember here, `fileName` is equal to the variable we built out of our user's first and last name earlier. From here, when our file is successfully received from the server and converted on the client, our file will download on the user's computer! Spectacular. To cap everything off, we reset our button state for the user to acknowledge the function completing.
+Just a one-liner to seal the deal: <code>saveAs( blob, `${fileName}.zip` );</code>. Boom! Here, we get the `saveAs` method from the filesaver.js library we added at the start of the recipe. Remember here, `fileName` is equal to the variable we built out of our user's first and last name earlier. From here, when our file is successfully received from the server and converted on the client, our file will download on the user's computer! Spectacular. To cap everything off, we reset our button state for the user to acknowledge the function completing.
 
 Wipe that marshmallow of your face, Venkman. We're done!
 
