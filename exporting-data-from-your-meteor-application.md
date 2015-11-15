@@ -37,7 +37,7 @@ Next, we need to add two NPM packages using the `meteorhacks:npm` package we jus
 
 Here, we're adding two dependencies: [JSZip](https://www.npmjs.org/package/jszip)—what we'll use to create our zip file—and [json2xml](https://www.npmjs.org/package/json2xml), what we'll use to generate an XML file on the server. Once you've updated your `packages.json` file, save it and each package will be installed.
 
-Before we dig in, we need two more packages from Atmosphere: `harrison:papaparse` and `pfafman:filesaver`. In our terminal and from within our project's directory:
+Before we dig in, we need two more packages from Atmosphere: `harrison:papa-parse` and `pfafman:filesaver`. In our terminal and from within our project's directory:
 
 <p class="block-header">Terminal</p>
 
@@ -45,7 +45,7 @@ Before we dig in, we need two more packages from Atmosphere: `harrison:papaparse
 meteor add harrison:papa-parse
 ```
 
-To make generating CSV files easier, we're going to add the [Papa Parse](http://papaparse.com/) library via the `harrison:papaparse` package. This will give us a one-liner for generating CSV's later (yes, that's awesome).
+To make generating CSV files easier, we're going to add the [Papa Parse](http://papaparse.com/) library via the `harrison:papa-parse` package. This will give us a one-liner for generating CSV's later (yes, that's awesome).
 
 <p class="block-header">Terminal</p>
 
@@ -452,7 +452,7 @@ let _formatData = {
 [...]
 ```
 
-Let's step through each method. First, for our `csv()` method, we simply return a call to `Papa.unparse()`, passing over the data we retrieved. This method comes from the Papa Parse package `harrison:papaparse` that we installed at the beginning of the recipe. With this one-liner, we get the passed data back as a CSV formatted string. _Baller_.
+Let's step through each method. First, for our `csv()` method, we simply return a call to `Papa.unparse()`, passing over the data we retrieved. This method comes from the Papa Parse package `harrison:papa-parse` that we installed at the beginning of the recipe. With this one-liner, we get the passed data back as a CSV formatted string. _Baller_.
 
 Next up, `xml()`. Again, thanks to the json2xml library we added earlier, this is a one liner as well. Here, we pass two arguments: an object with a parameter `posts` which is equal to the [xml root](https://en.wikipedia.org/wiki/Root_element) element we want to wrap our list of posts with `<posts></posts>`, taking the array of data we want converted to XML. In the second position, we add a single option `header: true` to ensure that our XML file is output with an XML encoding tag `<?xml version="1.0" encoding="UTF-8"?>` (good for importing the data elsewhere later).
 
