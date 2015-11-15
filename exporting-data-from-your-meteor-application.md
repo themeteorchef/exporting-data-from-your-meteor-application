@@ -42,7 +42,7 @@ Before we dig in, we need two more packages from Atmosphere: `harrison:papaparse
 <p class="block-header">Terminal</p>
 
 ```bash
-meteor add harrison:papaparse
+meteor add harrison:papa-parse
 ```
 
 To make generating CSV files easier, we're going to add the [Papa Parse](http://papaparse.com/) library via the `harrison:papaparse` package. This will give us a one-liner for generating CSV's later (yes, that's awesome).
