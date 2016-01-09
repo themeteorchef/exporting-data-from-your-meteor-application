@@ -5,7 +5,7 @@
 
 <div class="note">
   <h3>Additional Packages <i class="fa fa-warning"></i></h3>
-  <p>This recipe relies on several other packages that come as part of <a href="http://themeteorchef.com/base">Base</a>, the boilerplate kit used here on The Meteor Chef. The packages listed below are merely recipe-specific additions to the packages that are included by default in the kit. Make sure to reference the <a href="http://themeteorchef.com/base/packages-included">Packages Included list</a> for Base to ensure you have fulfilled all of the dependencies.</p>
+  <p>This recipe relies on several other packages that come as part of <a href="https://themeteorchef.com/base">Base</a>, the boilerplate kit used here on The Meteor Chef. The packages listed below are merely recipe-specific additions to the packages that are included by default in the kit. Make sure to reference the <a href="https://themeteorchef.com/base/packages-included">Packages Included list</a> for Base to ensure you have fulfilled all of the dependencies.</p>
 </div>
 
 ### Getting Started
@@ -45,7 +45,7 @@ Before we dig in, we need two more packages from Atmosphere: `harrison:papa-pars
 meteor add harrison:papa-parse
 ```
 
-To make generating CSV files easier, we're going to add the [Papa Parse](http://papaparse.com/) library via the `harrison:papa-parse` package. This will give us a one-liner for generating CSV's later (yes, that's awesome).
+To make generating CSV files easier, we're going to add the [Papa Parse](https://papaparse.com/) library via the `harrison:papa-parse` package. This will give us a one-liner for generating CSV's later (yes, that's awesome).
 
 <p class="block-header">Terminal</p>
 
@@ -70,7 +70,7 @@ Before we start handling our data, the first thing we need to do is set up an ex
 </template>
 ```
 
-Pretty simple! Here, we have some simple instructions for our user and a button. Notice that here, we're relying on Boostrap's [loading state feature](http://getbootstrap.com/javascript/#buttons) for buttons. This is totally optional, so if you're not using Bootstrap you'll want to remove it. With this in place, let's hop over to the JavaScript file for this template where we'll actually trigger the upload.
+Pretty simple! Here, we have some simple instructions for our user and a button. Notice that here, we're relying on Boostrap's [loading state feature](https://getbootstrap.com/javascript/#buttons) for buttons. This is totally optional, so if you're not using Bootstrap you'll want to remove it. With this in place, let's hop over to the JavaScript file for this template where we'll actually trigger the upload.
 
 <p class="block-header">/client/templates/authenticated/export.js</p>
 
